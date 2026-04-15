@@ -2,6 +2,7 @@ import Url from "../models/Url.js";
 import { nanoid } from "nanoid";
 import qrcode from "qrcode";
 import redisClient from "../utils/redisClient.js";
+import { BASE_URL } from "../config.js";
 
 const CACHE_TTL = 86400; // 24 hours (in seconds)
 
@@ -22,11 +23,36 @@ export const shortenUrl = async (originalUrl) => {
     return JSON.parse(cached);
   }
 
-  let shortId = await generateShortId();
+  const existingUrl = await Url.findOne({ originalUrl });
+  if (existingUrl) {
+    const shortUrl = `${BASE_URL}/${existingUrl.shortId}`;
+    const qrCode = await qrcode.toDataURL(shortUrl);
+    const result = {
+      shortId: existingUrl.shortId,
+      shortUrl,
+      qrCode,
+    };
 
-  const url = await Url.create({ shortId, originalUrl });
+    await redisClient.set(
+      `url:${existingUrl.shortId}`,
+      originalUrl,
+      "EX",
+      CACHE_TTL,
+    );
+    await redisClient.set(
+      `url:${originalUrl}`,
+      JSON.stringify(result),
+      "EX",
+      CACHE_TTL,
+    );
 
-  const shortUrl = `${process.env.BASE_URL}/${shortId}`;
+    return result;
+  }
+
+  const shortId = await generateShortId();
+  await Url.create({ shortId, originalUrl });
+
+  const shortUrl = `${BASE_URL}/${shortId}`;
   const qrCode = await qrcode.toDataURL(shortUrl); // base64 QR
 
   const result = { shortId, shortUrl, qrCode };

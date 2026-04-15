@@ -1,6 +1,7 @@
 import Redis from "ioredis";
+import { REDIS_URL } from "../config.js";
 
-const redisClient = new Redis("redis://127.0.0.1:6380");
+const redisClient = new Redis(REDIS_URL);
 
 redisClient.on("connect", () => {
   console.log("✅ Redis Connected");

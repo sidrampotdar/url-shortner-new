@@ -1,9 +1,20 @@
+import Joi from "joi";
 import { shortenUrl, redirectUrl } from "../services/urlService.js";
+
+const urlSchema = Joi.object({
+  originalUrl: Joi.string()
+    .uri({ scheme: ["http", "https"], allowRelative: false })
+    .required(),
+});
 
 export const shorten = async (req, res, next) => {
   try {
-    const { originalUrl } = req.body;
-    const result = await shortenUrl(originalUrl);
+    const { error, value } = urlSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    const result = await shortenUrl(value.originalUrl);
     res.status(201).json(result);
   } catch (error) {
     next(error);
