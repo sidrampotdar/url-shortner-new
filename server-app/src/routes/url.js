@@ -1,10 +1,16 @@
 import express from "express";
-import { shorten, redirect } from "../controllers/urlController.js";
-import { shortenRateLimiter } from "../middlewares/rateLimitMiddleware.js";
+import { shorten, redirect, stats } from "../controllers/urlController.js";
+import {
+  shortenRateLimiter,
+  statsRateLimiter,
+  redirectRateLimiter,
+} from "../middlewares/rateLimitMiddleware.js";
 
-const router = express.Router();
+// /api/* — JSON API routes
+export const apiRouter = express.Router();
+apiRouter.post("/shorten", shortenRateLimiter, shorten);
+apiRouter.get("/stats/:shortId", statsRateLimiter, stats);
 
-router.post("/shorten", shortenRateLimiter, shorten);
-router.get("/:shortId", redirect);
-
-export default router;
+// /* — short-link redirect routes (mounted at root)
+export const redirectRouter = express.Router();
+redirectRouter.get("/:shortId", redirectRateLimiter, redirect);

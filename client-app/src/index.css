@@ -1,2 +1,81 @@
 @import "tailwindcss";
-@plugin "daisyui";
+
+@plugin "daisyui" {
+  themes: dark --default, light;
+}
+
+* {
+  @apply transition-colors duration-200;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Breathing background ────────────────────────────────────────────────────
+   Multiple animated orbs with different timings and colors for a dynamic,
+   breathing effect. Uses transform and opacity for GPU acceleration.
+   will-change promotes elements to their own GPU layer for zero layout cost.
+────────────────────────────────────────────────────────────────────────────── */
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  will-change: transform, opacity;
+}
+
+/* Primary breathing orb - deep purple/violet */
+@keyframes breathe-a {
+  0%,  100% { transform: translateX(-50%) scale(1.00); opacity: 0.65; }
+  50%        { transform: translateX(-50%) scale(1.18); opacity: 0.95; }
+}
+.breathe-a { animation: breathe-a 8s cubic-bezier(0.4, 0.0, 0.6, 1.0) infinite; }
+
+/* Secondary breathing orb - blue glow */
+@keyframes breathe-b {
+  0%,  100% { transform: translate(-40%, -20%) scale(0.95); opacity: 0.50; }
+  50%        { transform: translate(-40%, -20%) scale(1.15); opacity: 0.80; }
+}
+.breathe-b { animation: breathe-b 10s cubic-bezier(0.4, 0.0, 0.6, 1.0) infinite; }
+
+/* Tertiary breathing orb - pink/magenta accent */
+@keyframes breathe-c {
+  0%,  100% { transform: translate(60%, 10%) scale(1.05); opacity: 0.45; }
+  50%        { transform: translate(60%, 10%) scale(0.85); opacity: 0.70; }
+}
+.breathe-c { animation: breathe-c 12s cubic-bezier(0.4, 0.0, 0.6, 1.0) infinite; }
+
+/* Result card fade-in ─────────────────────────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+.fade-up { animation: fade-up 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+
+/* Pulse animation for indicators */
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+.pulse-soft { animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+/* Glow effect for buttons */
+@keyframes button-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(249, 115, 22, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(249, 115, 22, 0.5); }
+}
+
+/* Smooth transitions */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── Result card fade-in ─────────────────────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+.fade-up { animation: fade-up 0.30s ease-out both; }
