@@ -99,9 +99,3 @@ Visit the Vite dev server URL printed in the terminal (default `http://localhost
 - The server currently uses an in-code Redis client configuration and should be updated to use `REDIS_URL` from environment variables.
 - Input validation and error handling are minimal, so sanitize and validate URLs before production use.
 
-## Recommended improvements
-
-- Add input validation on the server for `originalUrl`.
-- Use HTTPS in production for `BASE_URL` and `CLIENT_URL`.
-- Move any secret values into secure environment configuration.
-- Remove unused files and duplicate Redis utility code from `server-app/src/`.
