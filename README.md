@@ -124,7 +124,7 @@ Vite dev server runs at `http://localhost:5173`.
 
 ## Notes
 
-- Do not commit secrets or `.env` files to version control.
+- Do not commit secrets and `.env` files to version control.
 - The server currently uses an in-code Redis client configuration and should be updated to use `REDIS_URL` from environment variables.
 - Input validation and error handling are minimal, so sanitize and validate URLs before production use.
 
