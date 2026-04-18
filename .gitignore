@@ -1,3 +1,7 @@
+# Utility / scratch scripts
+fix.py
+patch_ui.py
+
 # Logs
 logs
 *.log

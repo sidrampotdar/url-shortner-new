@@ -4,6 +4,7 @@ import qrcode from "qrcode";
 import redisClient from "../utils/redisClient.js";
 import { BASE_URL, SHORT_ID_LENGTH } from "../config.js";
 import { validateSafeUrl } from "../utils/validateUrl.js";
+import logger from "../utils/logger.js";
 
 const CACHE_TTL = 86400; // 24 h (seconds)
 const ALIAS_RE = /^[a-zA-Z0-9_-]{3,30}$/;
@@ -127,7 +128,7 @@ export const redirectUrl = async (shortId) => {
     Url.findOneAndUpdate(
       { shortId },
       { $inc: { clicks: 1 }, $set: { lastClickAt: new Date() } }
-    ).exec();
+    ).exec().catch((err) => logger.warn("Click tracking failed for %s: %o", shortId, err));
   }
 
   return originalUrl;
