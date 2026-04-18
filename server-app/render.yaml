@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: url-shortener-api
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "5000"
+      # Add these after creating MongoDB Atlas and Upstash Redis:
+      - key: MONGO_URI
+        fromDatabase:
+          name: mongo_connection
+          property: connectionString
+      - key: REDIS_URL
+        sync: false
