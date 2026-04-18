@@ -85,7 +85,17 @@ npm start       # production
 Server starts on `PORT` (default `5000`).
 
 ### Frontend
-
+2026-04-18T17:39:03.272038494Z ==> Cloning from https://github.com/sidrampotdar/url-shortner-new
+2026-04-18T17:39:03.813403851Z ==> Checking out commit 8875d6cadb40ee326d1aaaa004dadace34ec048e in branch main
+2026-04-18T17:39:07.328558316Z ==> Using Node.js version 22.22.0 (default)
+2026-04-18T17:39:07.356598149Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+2026-04-18T17:39:09.731169617Z ==> Running build command 'npm build'...
+2026-04-18T17:39:09.854788966Z Unknown command: "build"
+2026-04-18T17:39:09.854857749Z 
+2026-04-18T17:39:09.85486746Z To see a list of supported npm commands, run:
+2026-04-18T17:39:09.854924782Z   npm help
+2026-04-18T17:39:09.907931466Z ==> Build failed 😞
+2026-04-18T17:39:09.907949047Z ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
 ```bash
 cd client-app
 npm run dev     # development (Vite HMR)
